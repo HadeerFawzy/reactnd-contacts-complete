@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 // if all my component has is a render method so we 
 // could use a Stateless function component or a basic function that takes props as an argument
@@ -23,6 +24,12 @@ function ListContacts (props){
         ))}
     </ol>
   )
+}
+
+// add prop type module to strict the user with the data type we want to pass
+ListContacts.propTypes = {
+  contacts: PropTypes.array.isRequired,
+  onDeleteContact: PropTypes.func.isRequired
 }
 
 // export this so we can import it at app.js file
