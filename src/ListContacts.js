@@ -18,23 +18,29 @@ class ListContacts extends Component {
     this.setState({query: query.trim() })
   }
   render (){
+    /*to make the code a little bit cleaner use derstructure from ES6*/
+    const { contacts, onDeleteContact } = this.props
+    const { query } = this.state
+    
     let showingContacts
     if(this.state.query){
       /*'i' for ignoring case*/
       const match = new RegExp(escapeRegExp(this.state.query), 'i')
-      showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+      showingContacts = contacts.filter((contact) => match.test(contact.name))
     }else {
-      showingContacts = this.props.contacts
+      showingContacts = contacts
     }
+    /*sort by property in that array of object*/
+    showingContacts.sort(sortBy('name'))
     return(
-        /* {JSON.stringify(this.state)} */
+      /* to test the query content >> {JSON.stringify(this.state)} */
       <div className='list-contacts'>
         <div className='list-contacts-top'>
           <input
             className='search-contacts'
             type='text'
             placeholder='Search contacts'
-            value={this.state.query}
+            value={query}
             onChange ={(event) => this.updateQuery(event.target.value)}
           />
         </div>
@@ -49,7 +55,7 @@ class ListContacts extends Component {
                   <p>{contact.name}</p>
                   <p>{contact.email}</p>
                 </div>
-                <button onClick={() => this.props.onDeleteContact(contact)} className='contact-remove'>
+                <button onClick={() => onDeleteContact(contact)} className='contact-remove'>
                   Remove
                 </button>
               </li>
