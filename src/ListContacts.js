@@ -1,5 +1,9 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
+/*this package to escape the regex from the input filter*/
+import escapeRegExp from 'escape-string-regexp'
+/*this package to sort the contacts by name alphabitcally*/
+import sortBy from 'sort-by'
 
 // now we want to add state t our component so we make it class not function
 class ListContacts extends Component {
@@ -14,9 +18,17 @@ class ListContacts extends Component {
     this.setState({query: query.trim() })
   }
   render (){
+    let showingContacts
+    if(this.state.query){
+      /*'i' for ignoring case*/
+      const match = new RegExp(escapeRegExp(this.state.query), 'i')
+      showingContacts = this.props.contacts.filter((contact) => match.test(contact.name))
+    }else {
+      showingContacts = this.props.contacts
+    }
     return(
+        /* {JSON.stringify(this.state)} */
       <div className='list-contacts'>
-        {JSON.stringify(this.state)}
         <div className='list-contacts-top'>
           <input
             className='search-contacts'
@@ -28,7 +40,7 @@ class ListContacts extends Component {
         </div>
         <ol className='contact-list'>
           {
-            this.props.contacts.map( (contact) => (
+            showingContacts.map( (contact) => (
               <li key={contact.id} className='contact-list-item'>
                 <div className='contact-avatar' style={{
                   background: `url(${contact.avatarURL})`
