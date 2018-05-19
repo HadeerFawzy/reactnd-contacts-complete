@@ -6,6 +6,7 @@ import * as ContactsAPI from './utils/ContactsAPI.js'
 class App extends Component {
   // add contact to state so react can controll them
   state = {
+    screen: 'list', //list, create
     contacts: []
   }
   componentDidMount (){
@@ -22,8 +23,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts}/>
-        <CreateContact/>
+        { this.state.screen === 'list' &&(
+          <ListContacts onDeleteContact={this.removeContact} contacts={this.state.contacts}/>
+        )}
+        {this.state.screen === 'create' &&(
+          <CreateContact/>
+        )}
       </div>
     )
   }
