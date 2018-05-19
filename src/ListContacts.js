@@ -47,9 +47,9 @@ class ListContacts extends Component {
             value={query}
             onChange ={(event) => this.updateQuery(event.target.value)}
           />
-          <Link 
-            to= "/create"
-            className = 'add-contact'
+          <Link
+            to='/create'
+            className='add-contact'
           >Add Contact</Link>
         </div>
         
@@ -83,3 +83,4 @@ class ListContacts extends Component {
 
 // export this so we can import it at app.js file
 export default ListContacts
+
